@@ -1,0 +1,5 @@
+[run]
+source =
+	../wigtools
+omit =
+	test*.py
