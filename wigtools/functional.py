@@ -1,4 +1,5 @@
 """Implementation of functions for the tools"""
+import sys
 from pathlib import Path
 from typing import List, Iterable
 from wigtools.wiggle import Wiggle
@@ -74,6 +75,7 @@ def split(infile: str, outprefix: str):
 
     wiggle = Wiggle(infile)
     for block_id, block in wiggle.blocks.items():
+        sys.stderr.write(f"[wigtools] Saving block: {block_id}\n")
         outfile = (outprefix + '_' + block_id.replace(':', '_') +
                    '_' + str(block.end) + ".wig")
         with open(outfile, 'w') as fout:
