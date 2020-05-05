@@ -7,7 +7,7 @@ def python():
     return cmdy.python.bake(_exe=sys.executable)
 
 def test_switch_base(python):
-    cmd = cmdy.echo(e="""\
+    cmd = cmdy.echo("""\
 variableStep chrom=chr span=1
 1\t1
 2\t2
@@ -26,7 +26,7 @@ variableStep chrom=chr span=1
 
 
 def test_sort(python):
-    cmd = cmdy.echo(e="""\
+    cmd = cmdy.echo("""\
 variableStep chrom=chr span=1
 5\t5
 6\t6
@@ -44,7 +44,7 @@ variableStep chrom=chr span=1
 """
 
 def test_stats(python):
-    cmd = cmdy.echo(e="""\
+    cmd = cmdy.echo("""\
 variableStep chrom=chr span=1
 5\t5
 6\t6
@@ -63,7 +63,7 @@ def test_query(python, tmp_path):
     qfile.write_text("""\
 chr\t1\t2
 """)
-    cmd = cmdy.echo(e="""\
+    cmd = cmdy.echo("""\
 variableStep chrom=chr span=1
 1\t1
 2\t2
@@ -83,7 +83,7 @@ def test_reshape(python, tmp_path):
 # This is a bed file
 chr\t1\t10
 """)
-    cmd = cmdy.echo(e="""\
+    cmd = cmdy.echo("""\
 variableStep chrom=chr span=1
 1\t1
 2\t2

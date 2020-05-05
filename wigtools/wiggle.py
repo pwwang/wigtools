@@ -274,7 +274,6 @@ class Wiggle:
         current_block = None
         with open(self.wigfile, 'r') as fwig:
             for line in fwig:
-                print(repr(line))
                 if _is_meta_line(line):
                     meta = _parse_meta_line(line)
                     current_block = WiggleBlock(**meta, base=self.base)
