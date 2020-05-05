@@ -278,7 +278,7 @@ class Wiggle:
                     meta = _parse_meta_line(line)
                     current_block = WiggleBlock(**meta, base=self.base)
                     # start cannot be calculated for variableStep
-                elif line.rstrip("\r\n"):
+                elif line.rstrip("\r\n") and current_block:
                     current_block.take(line)
                     if current_block.block_id not in self.blocks:
                         self.blocks[current_block.block_id] = current_block
