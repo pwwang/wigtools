@@ -98,3 +98,30 @@ variableStep chrom=chr span=1
 5\t5.0
 6\t6.0
 """
+
+def test_split(python, tmp_path):
+    outprefix = tmp_path / 'test_split' / 'out'
+    cmdy.echo("""\
+variableStep chrom=chr span=1
+1\t1
+2\t2
+variableStep chrom=chr span=1
+5\t5
+6\t6
+""", _pipe=True) | python({"m": "wigtools"}, "split", outprefix=outprefix)
+
+    b1file = outprefix.parent.joinpath("out_chr_1_2.wig")
+    b2file = outprefix.parent.joinpath("out_chr_5_6.wig")
+    assert b1file.is_file()
+    assert b2file.is_file()
+
+    assert b1file.read_text() == """\
+variableStep chrom=chr span=1
+1\t1.0
+2\t2.0
+"""
+    assert b2file.read_text() == """\
+variableStep chrom=chr span=1
+5\t5.0
+6\t6.0
+"""

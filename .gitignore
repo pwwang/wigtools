@@ -136,3 +136,5 @@ tests/remotedata
 
 # poetry
 poetry.lock
+
+*.bak

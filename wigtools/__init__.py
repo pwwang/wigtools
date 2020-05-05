@@ -71,6 +71,13 @@ commands.query.base = commands.stats.base
 commands.query.qfile = commands.query.qfile
 commands.query.qbase = commands.query.qbase
 
+# split
+commands.split = "Split blocks into different files"
+commands.split.i = SWITCH_BASE_COMMAND.i
+commands.split.outprefix.required = True
+commands.split.outprefix.desc = ("The output prefix. Blocks will be saved to "
+                                 "`outprefix`_<chr>_<start>.wig")
+
 # window: make blocks with given window
 
 def switch_base(opts):
@@ -95,6 +102,10 @@ def query(opts):
     """Find the blocks that intersect with the query regions"""
     functional.query(opts.i, opts.o, opts.base,
                      qfile=opts.qfile, qbase=opts.qbase)
+
+def split(opts):
+    """Split blocks into different files"""
+    functional.split(opts.i, opts.outprefix)
 
 def main():
     """Main entry"""

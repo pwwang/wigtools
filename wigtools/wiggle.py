@@ -1,4 +1,5 @@
 """Classes for wigtools"""
+import sys
 import hashlib
 from typing import Tuple
 import attr
@@ -273,7 +274,7 @@ class Wiggle:
         """Read the wiggle file"""
         current_block = None
         with open(self.wigfile, 'r') as fwig:
-            for line in fwig:
+            for i, line in enumerate(fwig):
                 if _is_meta_line(line):
                     meta = _parse_meta_line(line)
                     current_block = WiggleBlock(**meta, base=self.base)
@@ -282,6 +283,8 @@ class Wiggle:
                     current_block.take(line)
                     if current_block.block_id not in self.blocks:
                         self.blocks[current_block.block_id] = current_block
+                if i % 10000 == 0:
+                    sys.stderr.write(f"[wigtools] {i} lines read.\r")
 
     def stringify(self, fmt='wiggle', base=None, outfile=None):
         """Stringify the object.
@@ -335,7 +338,7 @@ class Wiggle:
                 except StopIteration:
                     break
                 if (prev_query and _compare_regions(prev_query,
-                                                    curr_query) != -1):
+                                                    curr_query) == 1):
                     raise WiggleUnsortedFile(
                         "Query file is not sorted. "
                         "Region {} appears after {}".format(curr_query,
@@ -360,7 +363,7 @@ class Wiggle:
                     break
                 if (prev_self and
                         _compare_regions(self._region(prev_self),
-                                         self._region(curr_self)) != -1):
+                                         self._region(curr_self)) == 1):
                     raise WiggleUnsortedFile(
                         "Current wiggle file is not sorted. "
                         "Region {} appears after {}".format(curr_self,

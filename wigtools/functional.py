@@ -1,4 +1,5 @@
 """Implementation of functions for the tools"""
+from pathlib import Path
 from typing import List, Iterable
 from wigtools.wiggle import Wiggle
 
@@ -64,3 +65,16 @@ def query(infile: str,
     wiggle = wiggle.query(regions, qbase)
 
     wiggle.stringify(outfile=outfile)
+
+def split(infile: str, outprefix: str):
+    """Split blocks into different files"""
+    outdir = Path(outprefix).parent
+    if not outdir.exists():
+        outdir.mkdir()
+
+    wiggle = Wiggle(infile)
+    for block_id, block in wiggle.blocks.items():
+        outfile = (outprefix + '_' + block_id.replace(':', '_') +
+                   '_' + str(block.end) + ".wig")
+        with open(outfile, 'w') as fout:
+            block.stringify(writer=fout)

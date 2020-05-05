@@ -104,3 +104,17 @@ variableStep chrom=chr span=1
 5	1.0
 6	2.0
 ```
+
+### Split blocks into different files
+
+```bash console
+> wigtools split -i test-unsorted.wig --outprefix outdir/split
+
+> ls outdir/
+split_chr_1_2.wig split_chr_5_6.wig
+
+> cat split_chr_1_2.wig
+variableStep chrom=chr span=1
+1	1.0
+2	2.0
+```
